@@ -1,0 +1,219 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--<link rel="stylesheet" href="style.css" />-->
+    <title>Cadastre</title>
+    <meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
+  	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/locale/bootstrap-table-ka-GE.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	<script src="/static/uprofile/js/reset_form.js"></script>
+
+</head>
+<body>
+	
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      
+      	<a class="navbar-brand" href="/projects">WebGIS</a>
+      
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+    
+	  <ul class="nav navbar-nav">
+    <li><a href="/">მთავარი</a></li>
+		<li><a href="/projects">პროექტები</a></li>
+		<li><a href="/linear/linear_projects">ხაზ. პროექტები</a></li>
+        <li><a href="/dataprocess/getvertix">ნაკვეთის კოორდინატები</a></li>
+		<li><a href="/faq">დახმარება</a></li>
+        <li><a href="/map/" style="color:red;"><b>რუკა</b></a></li>	
+			
+		<li><a href="/contacts">კონტაქტი</a></li>
+      </ul> 
+      <ul class="nav navbar-nav navbar-right">
+      	<li><a href="/points">ანგარიში: <b></b>6.67 ქულა</b></a></li>
+        <li class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon glyphicon-user"></span> topobatumi@gmail.com</a>
+          <ul class="dropdown-menu">
+            <li><a href="/profile/company-details"><span class="glyphicon glyphicon glyphicon-cog"></span> პარამეტრები</a></li>
+            <li><a href="/profile/employees"><span class="glyphicon glyphicon-edit"></span> ამზომველები</a></li>
+            <li><a href="/accounts/logout/"><span class="glyphicon glyphicon-log-out"></span> გასვლა</a></li>
+          </ul>
+        </li>      
+      </ul>
+    
+    </div>
+  </div>
+</nav>
+
+	
+    <div class="container-fluid" id="content">
+    
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+crossorigin=""></script>
+<div style="padding:10px;">
+    <div class="row m-3 p-3">
+        <div class="col-md-3">
+            <form class="form-inline" method='post' action="/dataprocess/getvertix" enctype="multipart/form-data">
+            <input type='hidden' name='csrfmiddlewaretoken' value='CnWxG95ZRxNrrt2aeW0VFzmD65l5BRcDqiVQRyEH0TYhDPJwYvztRqGqRSTTmEoT' />
+                  <div class="form-group">
+                    <label for="code">საკადასტრო კოდი:</label>
+                    <input type="input" class="form-control" id="code" name="code">
+                  </div>
+                  <button type="submit" class="btn btn-default">ძებნა</button>
+            </form>
+            
+                
+                    <div class="form-group">
+                        <p>22.24.02.293</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="radio-inline"><input type="radio" name="optradio" id="optradio" checked>UTM ზონა 37</label>
+                        <label class="radio-inline"><input type="radio" name="optradio" id="optradio1" >UTM ზონა 38</label>
+                        <div class="alert alert-info" role="alert">UTM ზონა ავტომატურად ინიშნება ნაკვეთის კოორდინატების მიხედვით.</div>
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="javascript:download_file('shp');">გადმოწერა (SHP) <img src="/static/dataprocess/shp.jpeg" alt="shp" width="35" height="35"></a></li>
+                        <li class="list-group-item"><a href="javascript:download_file('dxf');">გადმოწერა (DXF) <img src="/static/dataprocess/dxf.png" alt="dxf" width="32" height="32"></a></li>
+                        <li class="list-group-item"><a href="javascript:download_file('csv');">გადმოწერა (CSV) <img src="/static/dataprocess/csv.jpeg" alt="csv" width="32" height="32"></a></li>
+                    </ul>
+                    <input type="hidden" id="hiddenId" name="hiddenId" value="">
+                    
+                
+
+            
+        </div>
+
+        <div class="col-md-9" id="map" style="height: calc(100vh/1.5)"></div>
+    </div>
+</div>
+<script>
+
+    var map_view = "/map/";
+
+    window.onload = function(e){
+        document.getElementById('hiddenId').value = '37';
+        if (37 == 38){
+            document.getElementById("optradio1").checked = true;
+            document.getElementById('hiddenId').value = "38";
+        }else{
+            document.getElementById("optradio").checked = true;
+            document.getElementById('hiddenId').value = "37";
+        }
+    };
+
+    document.getElementById("optradio").onchange = function update(event) {
+        document.getElementById('hiddenId').value = "37";
+    };
+
+    document.getElementById("optradio1").onchange = function update(event) {
+        document.getElementById('hiddenId').value = "38";
+    };
+    function download_file(format) {
+        
+        zone = document.getElementById('hiddenId').value;
+        code = "22.24.02.293";
+        window.open('/dataprocess/download_vertix?zone='+zone+'&code='+code+'&format='+format, '_blank');
+        
+    };
+
+var mymap = L.map('map');
+var MapBoxSattelite = L.tileLayer('https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.jpg90?access_token=pk.eyJ1IjoiZG1pa2F2YSIsImEiOiJjanBmeWh3YjQwZXU1M3FwZmZxb3Z1ZmIyIn0.6FF9-e4X4Pqaz11Esw7EcA', {
+	maxZoom: 21,
+	attribution: 'MapBox',
+}).addTo(mymap);
+
+var emptyLayer = L.tileLayer('', {
+	maxZoom: 23,
+	attribution: 'WebGIS',
+});
+
+var naprLayer = L.tileLayer.wms('https://nv.napr.gov.ge/geoserver/wms', {
+    layers: 'NG_REG_LAYER',
+    format: 'image/png',
+	maxZoom: 23,
+    transparent: true,
+}).addTo(mymap);
+
+var baseMaps = {
+	"Map Box": MapBoxSattelite,
+    "ცარიელი": emptyLayer,
+};
+
+var overlayMaps = {
+    "საკადასტრო ფენა" : naprLayer,
+};
+L.control.layers(baseMaps, overlayMaps, {collapsed:true, position: 'topright'}).addTo(mymap);
+var pseudo_mercator_to_wgs = function (coordinates) {
+    var new_coord_list = []
+    for (i in coordinates){
+        var point = L.point(coordinates[i])
+        new_coord_list.push(L.Projection.SphericalMercator.unproject(point))
+    }
+    return new_coord_list
+}
+
+var polygon = L.polygon(pseudo_mercator_to_wgs([[4637810.59357689, 5105700.2316651], [4637783.64540676, 5105683.43580019], [4637785.15166953, 5105676.58213158], [4637780.77216587, 5105667.04851959], [4637865.27685377, 5105650.52997805], [4637853.16574669, 5105680.0061369], [4637810.59357689, 5105700.2316651]])).addTo(mymap);
+mymap.fitBounds(polygon.getBounds())
+
+
+function copy_to_clipboard() {
+    var copyText = document.getElementById("sak_code");
+    copyText.select()
+    copyText.setSelectionRange(0, 99999)
+    document.execCommand("copy")
+}
+
+var get_sak_code_url = "/dataprocess/get_sak_code";
+var popup = L.popup();
+function onMapClick(e) {
+    $.get(get_sak_code_url, {lat:e.latlng.lat, lng:e.latlng.lng}, function(data){
+    	if (data.sak_code) {
+    	    content = '<div class="mb-3" style="text-align: center"><div><input class="form-control" style="width: 150px; text-align:center; margin-bottom: 10px;" id="sak_code" value="' + data.sak_code + '"/></div><div class="center-block"><button class="btn btn-default" onclick="copy_to_clipboard()">copy</button></div></div>'
+    		popup
+                .setLatLng(e.latlng)
+                .setContent(content)
+                .openOn(mymap);
+    	};
+    }, 'JSON');
+};
+mymap.on('click', onMapClick);
+
+</script>
+
+
+    </div>
+	
+		
+
+<div id="footer" >
+	<div >
+	        <hr style="with: 4px;"/>
+		<div style=" width:100%; font-size:80%;" align=right>
+
+		</div>
+	</div>
+</div>
+
+
+	
+
+
+</body>
+</html>
