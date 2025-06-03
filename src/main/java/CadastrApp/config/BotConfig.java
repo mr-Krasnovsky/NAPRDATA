@@ -10,13 +10,11 @@ import lombok.Getter;
 @Configuration
 @Data
 @Getter
-@PropertySource("app.properties")
 public class BotConfig {
+    @Value("${BOT_NAME}")
+    private String botName;
 
-    @Value("${bot.name}")
-    String botName;
-
-    @Value("${bot.token}")
-    String token;
+    @Value("${BOT_TOKEN}")
+    private String botToken;
 }
 
