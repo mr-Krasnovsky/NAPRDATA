@@ -90,7 +90,7 @@ public class CadastrBot extends TelegramLongPollingBot {
                     }
                 } else {
                     sendMessage(chatId, "Неверный формат кадастрового номера. " +
-                            "Попробуйте снова. Формат должен быть: 12.34.56.789");
+                            "Попробуйте снова. Формат должен быть: 12.34.56.789 для Батуми или 01.23.45.6789.123 для Тбилиси");
                     sendRetryButton(chatId);
                 }
             } else if (UserState.getState(String.valueOf(chatId)) == UserState.WAITING_FOR_UTM_SELECTION) {

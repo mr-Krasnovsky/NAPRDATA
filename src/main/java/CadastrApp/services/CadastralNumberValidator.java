@@ -5,7 +5,9 @@ import java.util.regex.Pattern;
 
 public class CadastralNumberValidator {
 
-    private static final Pattern CADASTRAL_NUMBER_PATTERN = Pattern.compile("\\d{2}\\.\\d{2}\\.\\d{2}\\.\\d{3}");
+    private static final Pattern CADASTRAL_NUMBER_PATTERN =
+            Pattern.compile("^(\\d{2}\\.\\d{2}\\.\\d{2}\\.\\d{3}|\\d{2}\\.\\d{2}\\.\\d{2}\\.\\d{3}\\.\\d{3})$");
+
 
     public static boolean isValidCadastralNumber(String text) {
         if (text == null) {
