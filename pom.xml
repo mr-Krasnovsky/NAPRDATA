@@ -138,6 +138,8 @@
             <groupId>com.jdxf</groupId>
             <artifactId>jdxf</artifactId>
             <version>2.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/jdxf.jar</systemPath>
         </dependency>
     </dependencies>
 
