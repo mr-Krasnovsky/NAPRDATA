@@ -76,7 +76,7 @@ public class CadastrBot extends TelegramLongPollingBot {
                 if (CadastralNumberValidator.isValidCadastralNumber(messageText)) {
                     String cadastralNumber = messageText;
                     UserRequest request = new UserRequest(cadastralNumber);
-                    name = messageText;
+                    //name = messageText;
                     RealEstateObject object = searchInterface.checkingAvailabilityData(request);
                     if (object == null) {
                         sendMessage(chatId, "Данных по участку с номером " + cadastralNumber +
